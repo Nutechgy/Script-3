@@ -1,28 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <rel="stylesheet" href="styles.css"></rel>
-    <script src="script.js"defer></script>
     <title>Password Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-
-        #password-display {
-            font-size: 18px;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Password Generator</h1>
@@ -39,44 +21,6 @@
     </div>
     <button onclick="generatePassword()">Generate Password</button>
     <div id="password-display"></div>
-
-    <script>
-        function generatePassword() {
-            const length = document.getElementById('password-length').value;
-            const includeLowercase = document.getElementById('include-lowercase').checked;
-            const includeUppercase = document.getElementById('include-uppercase').checked;
-            const includeNumeric = document.getElementById('include-numeric').checked;
-            const includeSpecial = document.getElementById('include-special').checked;
-
-            if (length < 8 || length > 128) {
-                alert('Please choose a password length between 8 and 128 characters.');
-                return;
-            }
-
-            if (!(includeLowercase || includeUppercase || includeNumeric || includeSpecial)) {
-                alert('Please select at least one character type.');
-                return;
-            }
-
-            const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
-            const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const numericChars = '0123456789';
-            const specialChars = '!@#$%^&*()_-+=<>?/{}';
-
-            let allChars = '';
-            if (includeLowercase) allChars += lowercaseChars;
-            if (includeUppercase) allChars += uppercaseChars;
-            if (includeNumeric) allChars += numericChars;
-            if (includeSpecial) allChars += specialChars;
-
-            let password = '';
-            for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * allChars.length);
-                password += allChars.charAt(randomIndex);
-            }
-
-            document.getElementById('password-display').innerText = 'Your Password: ' + password;
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
