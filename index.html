@@ -5,22 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Password Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        #password {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Password Generator</h1>
-    <div>
-        <label for="password-length">Password Length (8-128):</label>
-        <input type="number" id="password-length" min="8" max="128">
+    <div class="container">
+        <h1>Password Generator</h1>
+        <button onclick="generatePassword()">Generate Password</button>
+        <div id="password"></div>
     </div>
-    <div>
-        <label>Include character types:</label>
-        <input type="checkbox" id="include-lowercase"> Lowercase
-        <input type="checkbox" id="include-uppercase"> Uppercase
-        <input type="checkbox" id="include-numeric"> Numeric
-        <input type="checkbox" id="include-special"> Special Characters
-    </div>
-    <button onclick="generatePassword()">Generate Password</button>
-    <div id="password-display"></div>
-    <script src="script.js"></script>
+
+    <script>
+        function generatePassword() {
+            const length = prompt("Enter the length of the password (between 8 and 128 characters):");
+            if (length < 8 || length > 128 || isNaN(length)) {
+                alert("Please enter a valid password length between 8 and 128 characters.");
+                return;
+            }
+
+            const includeLowercase = confirm("Include lowercase characters?");
+            const includeUppercase = confirm("Include uppercase characters?");
+            const includeNumeric = confirm("Include numeric characters?");
+            const includeSpecial = confirm("Include special characters?");
+
+            if (!(includeLowercase || includeUppercase || includeNumeric || includeSpecial)) {
+                alert("At least one character type should be selected.");
+                return;
+            }
+
+            const password = generateRandomPassword(length, includeLowercase, includeUppercase, includeNumeric, includeSpecial);
+
+            document.getElementById("password").innerText = "Generated Password: " + password;
+        }
+
+        function generateRandomPassword(length, includeLowercase, includeUppercase, includeNumeric, includeSpecial) {
+            let charset = "";
+            if (includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
+            if (includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (includeNumeric) charset += "0123456789";
+            if (includeSpecial) charset += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset.charAt(randomIndex);
+            }
+
+            return password;
+        }
+    </script>
 </body>
+
 </html>
+    
